@@ -5,7 +5,7 @@ import sqlite3
 import json
 import datetime
 
-DB_FILE = "db.sqlite"
+DB_FILE = r"backend\db.sqlite"
 
 redis_conn = redis.Redis(host='localhost', port=6379)
 queue = Queue('code-review', connection=redis_conn)
