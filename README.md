@@ -1,4 +1,3 @@
-```
 # Code-Review-Assistant
 
 ![Code-Review-Assistant](https://github.com/user-attachments/assets/d3b66c82-867b-49f1-be56-a57a5930fa0a)
@@ -61,12 +60,10 @@ Follow these steps to run the Code-Review-Assistant:
 
 ---
 
-## 📦 Tech Stack
+## Tech Stack
 
 * **VS Code Extension**: TypeScript, VS Code API
 * **Backend**: Python, Flask, RQ (Redis Queue)
 * **AI Feedback**: Mistral via OpenRouter API
 * **Database**: SQLite for storing submissions and feedback, faiss for storing embeddings
-
-
 ````
