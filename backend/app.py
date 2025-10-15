@@ -9,12 +9,11 @@ from backend import llm_utils, rag_utils, s3_utils
 from backend.worker import process_submission
 
 redis_conn = Redis()
-queue = Queue(connection=redis_conn)
- 
+queue = Queue("code-review", connection=redis_conn)
 app = Flask(__name__)
 submissions = {}
-index, metadata = rag_utils.load_faiss_index()
-DB_FILE = "db.sqlite"
+index, metadata = rag_utils.load_or_create_index()
+DB_FILE = r"backend\db.sqlite"
 
 def init_db():
     conn = sqlite3.connect(DB_FILE)

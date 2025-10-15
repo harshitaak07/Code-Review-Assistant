@@ -12,7 +12,7 @@ queue = Queue('code-review', connection=redis_conn)
 
 def process_submission(submission_id: int, code: str):
     user_embedding = rag_utils.embed_code_snippet(code)
-    index, metadata = rag_utils.load_faiss_index()
+    index, metadata = rag_utils.load_or_create_index()
     top_indices = rag_utils.search_top_k_faiss(user_embedding, index)
     context = rag_utils.retrieve_context(top_indices, metadata)
     rag_s3_key = s3_utils.upload_text(context, f"rag_cache/submission_{submission_id}.txt")
