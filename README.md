@@ -1,9 +1,9 @@
 # Code-Review-Assistant
 
-![Code-Review-Assistant](https://github.com/user-attachments/assets/d3b66c82-867b-49f1-be56-a57a5930fa0a)
 
-A VS Code extension for line-level code review with severity highlights.  
-It submits code to a backend, gets AI-generated feedback, and visually annotates your code.
+![Uploading Code-Review-Assistant.png…]()
+
+A VS Code extension for line-level code review with severity highlights and feedbacks.
 
 ## Setup & Usage
 
@@ -31,11 +31,8 @@ Follow these steps to run the Code-Review-Assistant:
 ## Results
 
 - The extension submits the code to the backend and displays the **submission ID** in the bottom panel.
-  <img width="386" height="83" alt="1" src="https://github.com/user-attachments/assets/c40f668d-8808-4376-96c4-fa5231b3af12" />
 - Code lines are highlighted according to severity.
 - Hovering over a highlighted line shows the **feedback** with explanation.
-  <img width="659" height="251" alt="2" src="https://github.com/user-attachments/assets/08bc2193-ba96-4545-b65d-4662e535a77b" />
-  <img width="611" height="82" alt="3" src="https://github.com/user-attachments/assets/fe6e154e-2d06-43f7-9276-9fa22d0cee7a" />
 
 ## Troubleshooting
 
@@ -49,5 +46,14 @@ Follow these steps to run the Code-Review-Assistant:
 
 - **VS Code Extension**: TypeScript, VS Code API
 - **Backend**: Python, Flask, RQ (Redis Queue)
-- **AI Feedback**: Mistral via OpenRouter API
+- **AI Feedback**: Mistral via OpenRouter API, codebert-base for embedding model
 - **Database**: SQLite for storing submissions and feedback, faiss for storing embeddings
+
+
+
+## Video
+
+https://github.com/user-attachments/assets/4e0530af-2c04-45ea-9f04-634740f8f785
+
+
+  
