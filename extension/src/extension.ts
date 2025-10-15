@@ -3,7 +3,6 @@ import { submitCode, getFeedback } from "./api";
 
 export function activate(context: vscode.ExtensionContext) {
   console.log("Code Review Assistant activated");
-
   let disposable = vscode.commands.registerCommand(
     "codeReviewAssistant.reviewCode",
     async () => {
@@ -15,12 +14,10 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage(
         `Code submitted for review (ID: ${submissionId})`
       );
-
       const feedback = await getFeedback(submissionId);
       highlightFeedback(editor, feedback);
     }
   );
-
   context.subscriptions.push(disposable);
   vscode.workspace.onDidSaveTextDocument(
     async (document: vscode.TextDocument) => {
@@ -34,7 +31,6 @@ export function activate(context: vscode.ExtensionContext) {
     }
   );
 }
-
 function highlightFeedback(editor: vscode.TextEditor, feedback: any[]) {
   const severityColors: { [key: string]: string } = {
     high: "rgba(255,0,0,0.3)",
@@ -43,30 +39,36 @@ function highlightFeedback(editor: vscode.TextEditor, feedback: any[]) {
   };
 
   const decorations: { [key: string]: vscode.TextEditorDecorationType } = {};
+  const decorationOptions: { [key: string]: vscode.DecorationOptions[] } = {};
 
-  for (const f of feedback) {
+  feedback.forEach((f) => {
     const severity = f.severity || "medium";
     if (!decorations[severity]) {
       decorations[severity] = vscode.window.createTextEditorDecorationType({
         backgroundColor: severityColors[severity],
       });
+      decorationOptions[severity] = [];
     }
-  }
+    let lineNum = 0;
+    if (f.line != null && f.line > 0 && f.line <= editor.document.lineCount) {
+      lineNum = f.line - 1;
+    }
+    const range = new vscode.Range(
+      lineNum,
+      0,
+      lineNum,
+      editor.document.lineAt(lineNum).text.length
+    );
+    const hoverMessage = new vscode.MarkdownString(
+      `**${severity.toUpperCase()}**: ${f.message}${
+        f.reasoning ? `\n\n${f.reasoning}` : ""
+      }`
+    );
+    decorationOptions[severity].push({ range, hoverMessage });
+  });
 
-  for (const severity of Object.keys(decorations)) {
-    const ranges: vscode.Range[] = feedback
-      .filter((f) => f.severity === severity)
-      .map((f) => {
-        const line = Math.max((f.line || 1) - 1, 0);
-        return new vscode.Range(
-          line,
-          0,
-          line,
-          editor.document.lineAt(line).text.length
-        );
-      });
-    editor.setDecorations(decorations[severity], ranges);
-  }
+  Object.keys(decorations).forEach((severity) => {
+    editor.setDecorations(decorations[severity], decorationOptions[severity]);
+  });
 }
-
 export function deactivate() {}

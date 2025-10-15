@@ -4,6 +4,7 @@ import sqlite3
 from flask import Flask, request, jsonify
 from rq import Queue
 from redis import Redis
+import hashlib
 
 from backend import llm_utils, rag_utils, s3_utils
 from backend.worker import process_submission
@@ -22,7 +23,8 @@ def init_db():
         CREATE TABLE IF NOT EXISTS submissions (
             submission_id INTEGER PRIMARY KEY,
             s3_key TEXT NOT NULL,
-            timestamp TEXT NOT NULL
+            timestamp TEXT NOT NULL, 
+            code_hash TEXT
         )
     """)
     c.execute("""
@@ -36,8 +38,6 @@ def init_db():
     conn.close()
 
 init_db()
-
-import hashlib
 
 @app.route('/submit-code', methods=['POST'])
 def submit_code():
@@ -53,6 +53,7 @@ def submit_code():
     if row:
         submission_id = row[0]
         conn.close()
+        return jsonify({"submission_id": submission_id, "status": "already_submitted"})
     c.execute("SELECT MAX(submission_id) FROM submissions")
     row = c.fetchone()
     submission_id = (row[0] or 0) + 1
@@ -66,6 +67,7 @@ def submit_code():
     conn.close()
     queue.enqueue(process_submission, submission_id, code_snippet)
     return jsonify({"submission_id": submission_id, "status": "queued"})
+
 
 
 @app.route('/get-feedback/<int:submission_id>', methods=['GET'])
