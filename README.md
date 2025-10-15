@@ -1,29 +1,21 @@
 # Code-Review-Assistant
 
-
-![Uploading Code-Review-Assistant.png…]()
-
 A VS Code extension for line-level code review with severity highlights and feedbacks.
+
+-<img width="359" height="357" alt="Code Review" src="https://github.com/user-attachments/assets/e6575507-279a-4d80-b393-42470736d020" />
 
 ## Setup & Usage
 
-Follow these steps to run the Code-Review-Assistant:
-
 1. **Start Redis**  
    Open a terminal and run: docker run -p 6379:6379 redis
-
 2. **Run the Backend**
    In a second terminal: python -m backend.app
-
 3. **Start the Worker**
    In a third terminal: python -m backend.worker_windows
-
 4. **Compile the VS Code Extension**
    In a fourth terminal: npm run compile
-
 5. **Run the Extension**
    Press `Ctrl + F5` in VS Code to launch the extension in a new window.
-
 6. **Review Your Code**
    - Open the file you want to review.
    - Run the command: **Run Code Review** (from Command Palette or keyboard shortcut).
@@ -48,8 +40,6 @@ Follow these steps to run the Code-Review-Assistant:
 - **Backend**: Python, Flask, RQ (Redis Queue)
 - **AI Feedback**: Mistral via OpenRouter API, codebert-base for embedding model
 - **Database**: SQLite for storing submissions and feedback, faiss for storing embeddings
-
-
 
 ## Video
 
