@@ -1,0 +1,47 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite
+*.db
+*.env
+.env.*
+
+# Conda environment
+# If you are using conda, ignore the environment folder (e.g., tf_env)
+env/
+tf_env/
+*.conda
+*.condarc
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Node / VS Code extension
+node_modules/
+out/
+package-lock.json
+npm-debug.log
+
+# FAISS and embeddings
+faiss_indexes/
+*.pkl
+
+# Data
+data/
+*.csv
+*.txt
+
+# Logs
+logs/
+*.log
+
+# Docker
+*.dockerfile
+docker-compose.override.yml
+
+# OS files
+.DS_Store
+Thumbs.db
